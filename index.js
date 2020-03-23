@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const token = 'Njg5MzU2MTA3Mzg2MTkxOTA0.XnhN8g.AsRDUevIijw2ecCfIgN7HKJQW6s';
+const token = 'Njg5MzU2MTA3Mzg2MTkxOTA0.XnhQig.xud0qsSGehqYLhsmFlKi3WHETJ8';
 
 const prefix = '++';
 
