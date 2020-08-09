@@ -21,6 +21,7 @@ var help = new Discord.MessageEmbed()
         { name: config.prefix + 'nick abcxyz', value: 'Change nick to abcxyz', inline: true },
         { name: config.prefix + 'time 10', value: 'Set timeout auto delete chat to 10s', inline: true },
     )
+    .addField("Show information:", config.prefix + "i or " + config.prefix + "i @mem")
 
 /**
  * @param {string} name 
@@ -81,6 +82,7 @@ bot.on('message', msg => {
             changeNickname(msg, name, num + check)
         }
         else {
+            let rep
             switch (args[0]) {
                 case 'ban':
                     if (msg.member.hasPermission("ADMINISTRATOR")) {
@@ -137,6 +139,36 @@ bot.on('message', msg => {
                     } else
                         msg.react('❌')
                     break
+                case 's':
+                case 'status:':
+                case 'i':
+                case 'info':
+                case 'information:':
+                    if (msg.mentions.members.size > 0) {
+                        msg.mentions.members.forEach(e => {
+                            let num = getNumber(e.nickname)
+                            if (num >= 0) {
+                                let rep = new Discord.MessageEmbed()
+                                    .setAuthor(`${e.user.username}#${e.user.discriminator}`, e.user.avatarURL())
+                                    .setDescription("Droplet information:")
+                                    .addFields(
+                                        { name: "Weapon", value: `${num}/216 - ${((num / 216) * 100).toFixed(2)}%`, inline: true },
+                                        { name: "Other", value: `${num}/144 - ${((num / 144) * 100).toFixed(2)}%`, inline: true }
+                                    )
+                                msg.channel.send(rep)
+                            }
+                        })
+                    } else {
+                        rep = new Discord.MessageEmbed()
+                            .setAuthor(`${msg.author.username}#${msg.author.discriminator}`, msg.author.avatarURL())
+                            .setDescription("Droplet information:")
+                            .addFields(
+                                { name: "Weapon", value: `${num}/216 - ${((num / 216) * 100).toFixed(2)}%`, inline: true },
+                                { name: "Other", value: `${num}/144 - ${((num / 144) * 100).toFixed(2)}%`, inline: true }
+                            )
+                        msg.channel.send(rep)
+                    }
+                    break;
                 case 'h':
                 case 'help':
                 case '?':
